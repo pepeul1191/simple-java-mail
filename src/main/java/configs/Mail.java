@@ -69,18 +69,32 @@ public class Mail {
     return this.email;
   }
 
-  public void setEMail(String userName, String destinationName, String destiationEmail, String ccName, String subjectName, String language) {
+  public void setEMail(String userName, String destinationName, String destiationEmail, String ccoName, String subjectName, String language, Map<String, String> localsPartial) {
     String demo = this.config.getString("email.from." + userName + ".name");
     String mail = this.config.getString("email.from." + userName + ".mail");
-    String cc = this.config.getString("email.cc." + ccName);
+    String cco = this.config.getString("email.cco." + ccoName);
     String subject = this.config.getString("email.subject." + subjectName + "." + language);
+    // setting body
+    this.setBody(localsPartial);
     // creating emil
     this.email = EmailBuilder.startingBlank()
       .from(demo, mail)
       .to(destinationName, destiationEmail)
-      .cc(cc)
+      .bcc(cco)
       .withSubject(subject)
       .withHTMLText(this.body)
       .buildEmail();
+  }
+
+  public String sendMail(){
+    String rpta = "";
+    try {
+      this.mailer.sendMail(this.email);
+      rpta = "ok";
+    } catch (MailException e) {
+      e.printStackTrace();
+      rpta = e.toString();
+    }
+    return rpta;
   }
 }
