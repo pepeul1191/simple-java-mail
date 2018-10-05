@@ -37,5 +37,6 @@ public class Gestion {
     public void mailConstructor(){
         Mail mail = new Mail();
         mail.setMailer("demo");
+        mail.setEMail("demo", "C. Tevez", "info@softweb.pe", "pepe", "wellcome", "en");
     }
 }

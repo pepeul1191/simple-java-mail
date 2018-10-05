@@ -11,7 +11,7 @@ import com.typesafe.config.ConfigFactory;
 
 public class Mail {
   private Mailer mailer;
-  private Email mail;
+  private Email email;
   private Config config;
   private String body;
 
@@ -36,17 +36,25 @@ public class Mail {
       .buildMailer();
   }
 
-  public Email getMail() {
-    return this.mail;
+  public void setBodyBlank(){
+    //String partial = 
   }
 
-  public void setMail(Email mail) {
-    Email email = EmailBuilder.startingBlank()
-      .from("José Valdivia Caballero", "demo@softweb.pe")
-      .to("C. Cane", "info@softweb.pe")
-      .cc("C. Bo <pepe.valdivia.caballero@outlook.com>")
-      .withSubject("hey")
-      .withPlainText("Caracter Google o Outlook, no es SPAM! ;)")
+  public Email getEMail() {
+    return this.email;
+  }
+
+  public void setEMail(String userName, String destinationName, String destiationEmail, String ccName, String subjectName, String language) {
+    String demo = this.config.getString("email.from." + userName + ".name");
+    String mail = this.config.getString("email.from." + userName + ".mail");
+    String cc = this.config.getString("email.cc." + ccName);
+    String subject = this.config.getString("email.subject." + subjectName + "." + language);
+    this.email = EmailBuilder.startingBlank()
+      .from(demo, mail)
+      .to(destinationName, destiationEmail)
+      .cc(cc)
+      .withSubject(subject)
+      .withHTMLText(this.body)
       .buildEmail();
   }
 }
