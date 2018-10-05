@@ -33,4 +33,9 @@ public class Gestion {
         }
         System.out.println("3 +++++++++++++++++++++++++++++++++++++++++");
     }
+
+    public void mailConstructor(){
+        Mail mail = new Mail();
+        mail.setMailer("demo");
+    }
 }
