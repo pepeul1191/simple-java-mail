@@ -45,7 +45,7 @@ public class Gestion {
         Mail mail = new Mail("blank", "demo", "en");
         mail.setMailer("demo");
         mail.setEMail("demo", "C. Tevez", "info@softweb.pe", "pepe", "wellcome", "en", locals);
-        System.out.println(mail.getBody());
+        //System.out.println(mail.getBody());
         // send
         mail.sendMail();
     }
