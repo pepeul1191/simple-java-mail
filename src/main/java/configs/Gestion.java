@@ -38,11 +38,14 @@ public class Gestion {
     }
 
     public void mailConstructor(){
+        // setting local email local variables
         Map<String, String> locals = new HashMap<String, String>();
         locals.put("nombre", "Pips Valdivia");
-        Mail mail = new Mail();
+        // creating email
+        Mail mail = new Mail("blank", "demo", "en");
         mail.setMailer("demo");
-        mail.setBodyBlank("demo", "en", locals);
+        mail.setBody(locals);
         mail.setEMail("demo", "C. Tevez", "info@softweb.pe", "pepe", "wellcome", "en");
+        System.out.println(mail.getBody());
     }
 }
