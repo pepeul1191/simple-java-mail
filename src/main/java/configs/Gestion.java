@@ -1,5 +1,8 @@
 package configs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.simplejavamail.MailException;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
@@ -35,8 +38,11 @@ public class Gestion {
     }
 
     public void mailConstructor(){
+        Map<String, String> locals = new HashMap<String, String>();
+        locals.put("nombre", "Pips Valdivia");
         Mail mail = new Mail();
         mail.setMailer("demo");
+        mail.setBodyBlank("demo", "en", locals);
         mail.setEMail("demo", "C. Tevez", "info@softweb.pe", "pepe", "wellcome", "en");
     }
 }

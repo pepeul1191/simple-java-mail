@@ -1,11 +1,16 @@
 package configs;
 
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.simplejavamail.MailException;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.MailerBuilder;
 import org.simplejavamail.mailer.config.TransportStrategy;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -36,8 +41,22 @@ public class Mail {
       .buildMailer();
   }
 
-  public void setBodyBlank(){
-    //String partial = 
+  public void setBodyBlank(String partialFile, String language, Map<String, String> localsPartial){
+    Config partialConfig = ConfigFactory.parseResources("templates/partial_" + partialFile + ".conf");
+
+    StrSubstitutor sub = new StrSubstitutor(localsPartial, "%(", ")");
+    String partialYield = sub.replace(partialConfig.getString("yield." + language));
+
+    Map<String, String> localsLayout = new HashMap<String, String>();
+    localsLayout.put("yield", partialYield);
+
+    Config templateConfig = ConfigFactory.parseResources("templates/layout_blank.conf");
+    sub = new StrSubstitutor(localsLayout, "%(", ")");
+    String body = sub.replace(templateConfig.getString("layout"));
+
+    System.out.println("1 ++++++++++++++++++++++++++++++");
+    System.out.println(body);
+    System.out.println("2 ++++++++++++++++++++++++++++++");
   }
 
   public Email getEMail() {
